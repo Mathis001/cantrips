@@ -32,9 +32,17 @@
 	ldelayread = $3
 	}
 
+($0 ~ /^read/ ){
+	uncorrRead = $8
+	}
+
+($0 ~ /^write/ ) {
+	uncorrWrite = $8 
+	}
+
 ($0 ~ /^write/  ) {
 	ldelaywrite = $3
-	print (ldev " " lmo ":" lsn " C:" ltemp " w:"  ldelaywrite " r:" ldelayread)
+	print (ldev " " lmo ":" lsn " C:" ltemp " w:"  ldelaywrite " r:" ldelayread " uR:" uncorrRead " uW:" uncorrWrite)
 	}
 
 

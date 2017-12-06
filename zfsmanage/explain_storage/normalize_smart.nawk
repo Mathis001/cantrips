@@ -46,8 +46,12 @@
 
 ($0 ~ /^write/  ) {
 	ldelaywrite = $3
-	print (ldev " " lmo ":" lsn " C:" ltemp " w:"  ldelaywrite " r:" ldelayread " uR:" uncorrRead " uW:" uncorrWrite “ dL:” defectList)
+	if (defectList || uncorrRead || uncorrWrite)
+		print (ldev " " lmo ":" lsn " C:" ltemp " w:"  ldelaywrite " r:" ldelayread " uR:" uncorrRead " uW:" uncorrWrite " dL:" defectList " <====")
+	else
+		print (ldev " " lmo ":" lsn " C:" ltemp " w:"  ldelaywrite " r:" ldelayread " uR:" uncorrRead " uW:" uncorrWrite " dL:" defectList)
 	}
+
 
 
 	

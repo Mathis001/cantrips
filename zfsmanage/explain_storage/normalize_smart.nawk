@@ -47,7 +47,7 @@
 ($0 ~ /^write/  ) {
 	ldelaywrite = $3
 	if (defectList || uncorrRead || uncorrWrite)
-		print (ldev " " lmo ":" lsn " C:" ltemp " w:"  ldelaywrite " r:" ldelayread " uR:" uncorrRead " uW:" uncorrWrite " dL:" defectList " ..|..(x_x) ..|..")
+		print (ldev " " lmo ":" lsn " C:" ltemp " w:"  ldelaywrite " r:" ldelayread " uR:" uncorrRead " uW:" uncorrWrite " dL:" defectList " (x_x)")
 	else
 		print (ldev " " lmo ":" lsn " C:" ltemp " w:"  ldelaywrite " r:" ldelayread " uR:" uncorrRead " uW:" uncorrWrite " dL:" defectList)
 	}

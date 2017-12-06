@@ -40,9 +40,13 @@
 	uncorrWrite = $8 
 	}
 
+($0 ~ /^Elements/ ) {
+ 	defectList = $6 
+ 	}
+
 ($0 ~ /^write/  ) {
 	ldelaywrite = $3
-	print (ldev " " lmo ":" lsn " C:" ltemp " w:"  ldelaywrite " r:" ldelayread " uR:" uncorrRead " uW:" uncorrWrite)
+	print (ldev " " lmo ":" lsn " C:" ltemp " w:"  ldelaywrite " r:" ldelayread " uR:" uncorrRead " uW:" uncorrWrite “ dL:” defectList)
 	}
 
 

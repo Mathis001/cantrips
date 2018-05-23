@@ -1,6 +1,6 @@
 #!/bin/sh 
 
-
+# Based on Ash Gokhale's rrdbunny script. Modified to output SVG files. 
 # show rrd data in 
 # $2...n  is the data source type
 # $1 is the filename
@@ -114,85 +114,14 @@ echo done infile scanning
 echo  $defs
 echo $lines
 
-rrdtool graph - --imgformat PNG \
-	-t "bunnies as of  $first_ts ` date -r $first_ts` - $last_ts `date -r $last_ts` "  \
+rrdtool graph /tmp/test.svg --imgformat SVG \
+	-t "RRD graph as of  $first_ts ` date -r $first_ts` - $last_ts `date -r $last_ts` "  \
 	$defs \
 	--start  $first_ts \
 	--step 1 \
 	--end  $last_ts \
 	$lines       \
 	--color CANVAS#000000 --color BACK#000000 --color FONT#FFFFFF \
-	$resolution  $options \
-	| $output_pipeline
-echo fin 
+	$resolution  $options 
+#	| $output_pipeline
 exit 0
-#shift
-#data_sources=$@
-#
-#echo "file: $rrd_infile"
-#echo "sources: $data_sources"
-#
-#defs=""
-#lines=""
-#cursor=1
-#for ds in $data_sources ; do
-#	## loop thourough the datasources and build up 
-#	echo "source: $cursor $ds "
-#	#convolve the data source cursor into a color that will not cause seizues or eyebleeds
-#	colorR=` dc -e "16o 16i D1  $cursor * EF % 10 + p "`
-#	colorG=` dc -e "16o 16i F5  $cursor * EF % 10 + p "`
-#	colorB=` dc -e "16o 16i 5A  $cursor * EF % 10 + p "`
-#	color="$colorR$colorG$colorB"
-#	cursor=$((cursor+=1))
-#	defs="$defs  DEF:bunny_$ds=$rrd_infile:$ds:AVERAGE"
-#	echo $defs
-#	lines="$lines  LINE$cursor:bunny_$ds#$color:bunniesper$rrd_infile$ds"
-#	echo $lines
-#done 
-#
-##
-#ra_idx=0 #3 hours
-#ra_idx=1 #3 hours
-#ra_idx=2 #3  hours
-#ra_idx=3 #24 hours
-#ra_idx=4 #24 hours
-#ra_idx=5 #24 hours
-#ra_idx=6 #7*(24) hours
-#ra_idx=7 #7*(24) hours
-#ra_idx=8 #7*(24) hours
-#ra_idx=9  # 1 month 
-#ra_idx=10 # 1 month 
-#ra_idx=11 # 1 month 
-#ra_idx=12 # 1 year 
-#ra_idx=13 # 1 year 
-#ra_idx=14 # 1 year 
-#
-#
-#ra_idx=5 
-#
-##get epoch timestamps
-#first_ts=`rrdtool first --rraindex $ra_idx $rrd_infile`
-###last does not take rraindex -as , or last is last
-#last_ts=`rrdtool last $rrd_infile` 
-#
-##shrink the view window by some hours
-##first_ts=$((  $first_ts + (3600 * (0) )    ))
-##last_ts=$((    $last_ts - (3600 * (0) )       ))
-#
-#echo "$first_ts `date -r $first_ts` to $last_ts `date -r $last_ts`"
-#echo 'control q to quit xv'
-#rrdtool graph - --imgformat PNG \
-#	-t "bunnies as of  $first_ts ` date -r $first_ts` - $last_ts `date -r $last_ts` "  \
-#	$defs \
-#	--start  $first_ts \
-#	--step 1 \
-#	--end  $last_ts \
-#	$lines \
-#	--color CANVAS#000000 --color BACK#000000 --color FONT#FFFFFF \
-#	--width 3080 --height 1600  \
-#	| xv - 
-#
-##	--width 1080 --height 700  | xv - 
-##	--start `rrdtool first --rraindex $ra_idx $rrd_infile` --step 1 \
-##	DEF:bunny=$rrd_infile:write:AVERAGE \
-##	LINE1:bunny#60FF6F:"bunnies/femptofornight \l" \
